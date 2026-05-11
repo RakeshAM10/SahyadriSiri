@@ -46,8 +46,7 @@ fun AuthScreen(
     onGoogleAuthSuccess: (idToken: String) -> Unit,
     isLoading: Boolean = false,
     globalError: String? = null,
-    onClearError: () -> Unit = {},
-    onGuestAccess: () -> Unit = {}
+    onClearError: () -> Unit = {}
 ) {
     var mode by remember { mutableStateOf(AuthMode.SIGN_IN) }
 
@@ -164,17 +163,6 @@ fun AuthScreen(
                     onGoogleAuthSuccess(idToken)
                 },
                 onError = { /* Let viewmodel handle or handle locally if needed */ }
-            )
-
-            Spacer(Modifier.height(24.dp))
-
-            // ── Guest Access ──────────────────────────────────────────────
-            Text(
-                "Continue as Guest",
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Blue007AFF,
-                modifier = Modifier.glassClickable { onGuestAccess() }
             )
 
             Spacer(Modifier.height(32.dp))

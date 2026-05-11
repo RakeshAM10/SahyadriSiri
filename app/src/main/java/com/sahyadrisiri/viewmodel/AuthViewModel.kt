@@ -34,6 +34,30 @@ class AuthViewModel : ViewModel() {
 
     private val auth get() = SupabaseClient.client.auth
 
+    /** Converts raw exceptions into clean, user-friendly messages */
+    private fun friendlyErrorMessage(e: Exception, fallback: String): String {
+        val msg = e.message?.lowercase() ?: return fallback
+        return when {
+            msg.contains("failed to connect") || msg.contains("unable to resolve") ||
+            msg.contains("no address associated") || msg.contains("network is unreachable") ||
+            msg.contains("timeout") || msg.contains("timed out") ->
+                "No internet connection. Please check your network and try again."
+            msg.contains("invalid login credentials") || msg.contains("invalid credential") ->
+                "Incorrect email or password. Please try again."
+            msg.contains("email not confirmed") ->
+                "Please verify your email address first. Check your inbox."
+            msg.contains("user already registered") || msg.contains("already been registered") ->
+                "This email is already registered. Please sign in instead."
+            msg.contains("password") && msg.contains("too short") ->
+                "Password must be at least 6 characters."
+            msg.contains("rate limit") || msg.contains("too many requests") ->
+                "Too many attempts. Please wait a moment and try again."
+            msg.contains("invalid email") ->
+                "Please enter a valid email address."
+            else -> fallback
+        }
+    }
+
     init {
         // Observe the session status flow. This automatically handles the asynchronous loading
         // of the session from local storage when the app first starts.
@@ -77,8 +101,7 @@ class AuthViewModel : ViewModel() {
                 )
             } catch (e: Exception) {
                 _authState.value = AuthState.Error(
-                    e.message?.takeIf { it.isNotBlank() }
-                        ?: "Sign in failed. Please check your credentials."
+                    friendlyErrorMessage(e, "Sign in failed. Please check your credentials.")
                 )
             }
         }
@@ -104,8 +127,7 @@ class AuthViewModel : ViewModel() {
                 )
             } catch (e: Exception) {
                 _authState.value = AuthState.Error(
-                    e.message?.takeIf { it.isNotBlank() }
-                        ?: "Sign up failed. Please try again."
+                    friendlyErrorMessage(e, "Sign up failed. Please try again.")
                 )
             }
         }
@@ -128,8 +150,7 @@ class AuthViewModel : ViewModel() {
                 )
             } catch (e: Exception) {
                 _authState.value = AuthState.Error(
-                    e.message?.takeIf { it.isNotBlank() }
-                        ?: "Google sign-in failed."
+                    friendlyErrorMessage(e, "Google sign-in failed. Please try again.")
                 )
             }
         }

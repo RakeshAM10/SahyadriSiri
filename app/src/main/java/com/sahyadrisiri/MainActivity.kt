@@ -87,12 +87,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val authState by authViewModel.authState.collectAsStateWithLifecycle()
-            var isGuestMode by remember { mutableStateOf(false) }
             
             SahyadriSiriTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     when {
-                        isGuestMode || authState is AuthState.Success -> {
+                        authState is AuthState.Success -> {
                             MainContent(mainViewModel, authViewModel) { getCurrentLocation() }
                         }
                         authState is AuthState.Loading -> {
@@ -113,8 +112,7 @@ class MainActivity : ComponentActivity() {
                                 onGoogleAuthSuccess = { t -> authViewModel.signInWithGoogle(t) },
                                 isLoading = false,
                                 globalError = error,
-                                onClearError = { authViewModel.resetState() },
-                                onGuestAccess = { isGuestMode = true }
+                                onClearError = { authViewModel.resetState() }
                             )
                         }
                     }
