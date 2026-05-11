@@ -1,0 +1,42 @@
+# ─── Android / Gradle ────────────────────────────────────────────────────────
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/app/build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# ─── Secrets & Signing ───────────────────────────────────────────────────────
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+
+# ─── IDE ─────────────────────────────────────────────────────────────────────
+.idea/
+*.swp
+*~
+.vscode/
+
+# ─── Kotlin / KSP ───────────────────────────────────────────────────────────
+.kotlin/
+
+# ─── OS files ────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Large / generated files ────────────────────────────────────────────────
+*.hprof
+*.log
+adb_log.txt
+
+# ─── Maven (not needed for Android) ─────────────────────────────────────────
+target/
+pom.xml
+pom2.xml

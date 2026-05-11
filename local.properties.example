@@ -1,0 +1,23 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# SahyadriSiri — local.properties
+# ──────────────────────────────────────────────────────────────────────────────
+# Copy this file to `local.properties` and fill in your values.
+# DO NOT commit local.properties to version control!
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Android SDK path (auto-set by Android Studio usually)
+sdk.dir=/Users/yourname/Library/Android/sdk
+
+# ─── Supabase (Required) ────────────────────────────────────────────────────
+# Get these from your Supabase project dashboard → Settings → API
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_ANON_KEY=your_supabase_anon_key_here
+
+# ─── Gemini AI (Required for AI features) ───────────────────────────────────
+# Get your key at https://aistudio.google.com/
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# ─── Backend Server (Optional) ──────────────────────────────────────────────
+# For Android emulator connecting to host machine: use 10.0.2.2
+# For real device on same WiFi: use your machine's local IP
+SERVER_BASE_URL=http://10.0.2.2:3000
